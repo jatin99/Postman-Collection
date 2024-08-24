@@ -37,6 +37,16 @@ jobs:
       - name: Execute Postman Collection
         run: newman run Inwarranty\ QC\ Accept.postman_collection.json -e QA.postman_environment.json -r htmlextra,cli
 
+      - name: Archive the HTML Report
+        uses: actions/upload-artifact@v4.3.6
+        with:
+          name: POSTMAN TEST REPORTS
+          path: newman/*.html
+          
+       
+
+
+
 
 
 
