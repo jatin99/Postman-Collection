@@ -1,0 +1,504 @@
+{
+	"info": {
+		"_postman_id": "bad0c8fc-2fd9-48fd-ae02-954aeae0d267",
+		"name": "Inwarranty QC Accept",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "648497"
+	},
+	"item": [
+		{
+			"name": "LoginAPIRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.variables.get(\"userNameVariable\"))\r",
+							"\r",
+							"//i want to store the response body in a JS variable\r",
+							"var responseBody=pm.response.json();\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify if the message is success?\", function (){\r",
+							"    pm.expect(responseBody.message).to.be.equals(\"Success\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if TOKEN is Present\", function (){\r",
+							"    pm.expect(responseBody.data.token).to.be.not.null;\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"var schema = {\r",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"message\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"data\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {\r",
+							"        \"abc\": {\r",
+							"          \"type\": \"string\"\r",
+							"        }\r",
+							"      },\r",
+							"      \"required\": [\r",
+							"        \"abc\"\r",
+							"      ]\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"message\",\r",
+							"    \"data\"\r",
+							"  ]\r",
+							"}\r",
+							"\r",
+							"\r",
+							"pm.test('Schema is valid', function () {\r",
+							"    pm.expect(tv4.validate(responseBody, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"console.log(responseBody.data.token);\r",
+							"pm.collectionVariables.set(\"FD token\",responseBody.data.token);\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//jS TS\r",
+							"var a; \r",
+							"a = 20;\r",
+							"console.log(a);\r",
+							"\r",
+							"//SET The data for making the api request!!\r",
+							"a = \"iamfd\";\r",
+							"console.log(a);\r",
+							"\r",
+							"//postman variables:\r",
+							"//Local variables\r",
+							"pm.variables.set(\"userNameVariable\", \"iamfd\");\r",
+							"\r",
+							"pm.collectionVariables.set(\"user\",\"kavita\");\r",
+							"pm.globals.set(\"global user\",\"abc\");\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true,
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{userNameVariable}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "demoapi",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7",
+						"disabled": true
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "DNT",
+						"value": "1",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"value": "http://phoenix.techwithjatin.com",
+						"disabled": true
+					},
+					{
+						"key": "Referer",
+						"value": "http://phoenix.techwithjatin.com/",
+						"disabled": true
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+						"disabled": true
+					},
+					{
+						"key": "random",
+						"value": "{{userNameVariable}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{userNameVariable}}\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/v1/login?params={{userNameVariable}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"v1",
+						"login"
+					],
+					"query": [
+						{
+							"key": "params",
+							"value": "{{userNameVariable}}"
+						}
+					]
+				},
+				"description": "This endpoint allows users to log in by sending a POST request to the specified URL. The request should include the username and password in the request body.\n\n### Request Body\n\n- username (text, required): The username of the user.\n    \n- password (text, required): The password of the user.\n    \n\n### Response\n\nThe response will have a status code of 200 and a content type of application/json. The response body will contain a JSON object with the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"message\": {\n            \"type\": \"string\"\n        },\n        \"data\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"token\": {\n                    \"type\": \"string\"\n                }\n            }\n        }\n    }\n}\n\n ```\n\nThe \"message\" property may contain a message from the server, and the \"data\" property will contain a \"token\" which can be used for authentication in subsequent requests."
+			},
+			"response": []
+		},
+		{
+			"name": "UserDetailsAPIRequest",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{FD token}}"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"disabled": true
+					},
+					{
+						"key": "DNT",
+						"value": "1",
+						"disabled": true
+					},
+					{
+						"key": "If-None-Match",
+						"value": "W/\"1b6-cR2dclq1S8zJDBAsHCDA10lTBi4\"",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"value": "http://phoenix.techwithjatin.com",
+						"disabled": true
+					},
+					{
+						"key": "Referer",
+						"value": "http://phoenix.techwithjatin.com/",
+						"disabled": true
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/v1/userdetails?data={{user}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"v1",
+						"userdetails"
+					],
+					"query": [
+						{
+							"key": "data",
+							"value": "{{user}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CountAPIRequest",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{FD token}}"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "DNT",
+						"value": "1"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "W/\"f0-fi44JTS097yN5UZ04vc8KZjpdL0\""
+					},
+					{
+						"key": "Origin",
+						"value": "http://phoenix.techwithjatin.com"
+					},
+					{
+						"key": "Referer",
+						"value": "http://phoenix.techwithjatin.com/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/v1/dashboard/count",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"v1",
+						"dashboard",
+						"count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MasterAPIRequest",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{FD token}}"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Length",
+						"value": "0"
+					},
+					{
+						"key": "Content-Type",
+						"value": "text/plain"
+					},
+					{
+						"key": "DNT",
+						"value": "1"
+					},
+					{
+						"key": "Origin",
+						"value": "http://phoenix.techwithjatin.com"
+					},
+					{
+						"key": "Referer",
+						"value": "http://phoenix.techwithjatin.com/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/v1/master",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"v1",
+						"master"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateAPIRequest",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//14 digits random numnber  number\r",
+							"let x =10;//JS\r",
+							"var randomValue = Math.random()*100000000000000;\r",
+							"var imei = Math.floor(randomValue);\r",
+							"console.log(imei)\r",
+							"pm.variables.set(\"IMEI\",imei);\r",
+							"\r",
+							"var a = 30;\r",
+							"\r",
+							"function b()\r",
+							"{\r",
+							"    console.log(a);\r",
+							"}\r",
+							"function a(){\r",
+							"    let a =20;\r",
+							"    console.log(a)\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{FD token}}"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "DNT",
+						"value": "1"
+					},
+					{
+						"key": "Origin",
+						"value": "http://phoenix.techwithjatin.com"
+					},
+					{
+						"key": "Referer",
+						"value": "http://phoenix.techwithjatin.com/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mst_service_location_id\": 0,\r\n    \"mst_platform_id\": 2,\r\n    \"mst_warrenty_status_id\": 1,\r\n    \"mst_oem_id\": 1,\r\n    \"customer\": {\r\n        \"first_name\": \"{{$randomFirstName}}\",\r\n        \"last_name\": \"{{$randomLastName}}\",\r\n        \"mobile_number\": \"{{$randomPhoneNumber}}\",\r\n        \"mobile_number_alt\": \"\",\r\n        \"email_id\": \"{{$randomEmail}}\",\r\n        \"email_id_alt\": \"{{$randomEmail}}\"\r\n    },\r\n    \"customer_address\": {\r\n        \"flat_number\": \"Test\",\r\n        \"apartment_name\": \"test\",\r\n        \"street_name\": \"Jupiter C-304 Vasant Galaxy\",\r\n        \"landmark\": \"Demo\",\r\n        \"area\": \"432323\",\r\n        \"pincode\": \"400104\",\r\n        \"country\": \"India\",\r\n        \"state\": \"Maharashtra\"\r\n    },\r\n    \"customer_product\": {\r\n        \"dop\": \"2024-07-23T18:30:00.000Z\",\r\n        \"serial_number\": \"{{IMEI}}\",\r\n        \"imei1\": \"{{IMEI}}\",\r\n        \"imei2\": \"{{IMEI}}\",\r\n        \"popurl\": \"2024-07-23T18:30:00.000Z\",\r\n        \"product_id\": 1,\r\n        \"mst_model_id\": 1\r\n    },\r\n    \"problems\": [\r\n        {\r\n            \"id\": 3,\r\n            \"remark\": \"Test\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/v1/job/create",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"v1",
+						"job",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "user",
+			"value": ""
+		},
+		{
+			"key": "FD token",
+			"value": ""
+		}
+	]
+}
